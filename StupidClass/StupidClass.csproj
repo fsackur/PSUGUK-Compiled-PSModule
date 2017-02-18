@@ -43,6 +43,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>C:\dev\cmdow\bin\Release\cmdow.exe /run powershell -NoExit -Command "sl $(ProjectDir); $host.UI.RawUI.WindowTitle ='$(TargetName)'; Import-Module $(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>start powershell -NoProfile -Command "Get-Process powershell | where {$_.MainWindowTitle -eq '$(TargetName)'} | Stop-Process"
+</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
